@@ -19,6 +19,7 @@ export const contributors: Contributor[] = [
     avatar: "https://mc-heads.net/avatar/FPS_Z/64",
     url: "https://gitee.com/fps_z",
   },
+
   
   // ============================================
   // 在这里添加更多贡献者！

@@ -9,6 +9,7 @@ use commands::config as config_commands;
 use commands::system as system_commands;
 use commands::player as player_commands;
 use commands::settings as settings_commands;
+use commands::update as update_commands;
 
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
@@ -50,6 +51,8 @@ pub fn run() {
             settings_commands::reset_settings,
             settings_commands::export_settings,
             settings_commands::import_settings,
+            update_commands::check_update,
+            update_commands::open_download_url,
         ])
         .on_window_event(|_window, event| {
             if let tauri::WindowEvent::CloseRequested { .. } = event {

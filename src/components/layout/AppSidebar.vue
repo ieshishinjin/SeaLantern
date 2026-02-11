@@ -30,7 +30,16 @@ const groups = [
   { key: "system", label: "系统" },
 ];
 
-function navigateTo(path: string) { router.push(path); }
+function navigateTo(path: string) {
+  console.log('[AppSidebar] 点击导航:', path);
+  console.log('[AppSidebar] 当前路由:', route.path);
+  try {
+    router.push(path);
+    console.log('[AppSidebar] 路由跳转成功');
+  } catch (error) {
+    console.error('[AppSidebar] 路由跳转失败:', error);
+  }
+}
 
 function isActive(path: string): boolean {
   if (path === "/") return route.path === "/";

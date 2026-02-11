@@ -4,3 +4,4 @@ pub mod config;
 pub mod system;
 pub mod player;
 pub mod settings;
+pub mod update;

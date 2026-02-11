@@ -1,27 +1,80 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref, onMounted, onBeforeMount } from "vue";
+import { openUrl } from "@tauri-apps/plugin-opener";
 import SLCard from "../components/common/SLCard.vue";
 import SLButton from "../components/common/SLButton.vue";
 import { contributors as contributorsList } from "../data/contributors";
+import { checkUpdate, openDownloadUrl, type UpdateInfo } from "../api/update";
 
-const version = "0.1.0";
+console.log('[AboutView] 脚本开始执行');
+
+const version = "0.1.1";
 const buildDate = "2026";
 
 const contributors = ref(contributorsList);
 
-// 使用动态导入和错误处理，避免阻塞组件加载
-async function openUrl(url: string) {
+// 更新相关状态
+const isCheckingUpdate = ref(false);
+const updateInfo = ref<UpdateInfo | null>(null);
+const updateError = ref<string | null>(null);
+
+onBeforeMount(() => {
+  console.log('[AboutView] onBeforeMount - 组件即将挂载');
+});
+
+onMounted(() => {
+  console.log('[AboutView] onMounted - 组件已挂载');
+  console.log('[AboutView] contributors:', contributors.value);
+});
+
+// 打开外部链接
+async function openLink(url: string) {
+  console.log('[AboutView] 尝试打开URL:', url);
   if (!url) return;
   try {
-    // 动态导入 opener 插件
-    const { open } = await import("@tauri-apps/plugin-opener");
-    await open(url);
+    await openUrl(url);
+    console.log('[AboutView] URL打开成功');
   } catch (e) {
-    console.error("Failed to open URL:", e);
-    // 降级方案：显示链接让用户手动复制
-    alert(`无法自动打开链接，请手动访问：\n${url}`);
+    console.error("[AboutView] 打开URL失败:", e);
+    alert(`无法打开链接: ${e}`);
   }
 }
+
+// 检查更新
+async function handleCheckUpdate() {
+  console.log('[AboutView] 开始检查更新');
+  isCheckingUpdate.value = true;
+  updateError.value = null;
+  updateInfo.value = null;
+
+  try {
+    // 替换为你的Gitee用户名和仓库名
+    const info = await checkUpdate("fps_z", "SeaLantern");
+    console.log('[AboutView] 更新信息:', info);
+    updateInfo.value = info;
+  } catch (error) {
+    console.error('[AboutView] 检查更新失败:', error);
+    updateError.value = error as string;
+  } finally {
+    isCheckingUpdate.value = false;
+  }
+}
+
+// 下载更新
+async function handleDownloadUpdate() {
+  console.log('[AboutView] 开始下载更新');
+  if (updateInfo.value?.download_url) {
+    try {
+      await openDownloadUrl(updateInfo.value.download_url);
+      console.log('[AboutView] 下载链接已打开');
+    } catch (error) {
+      console.error('[AboutView] 打开下载链接失败:', error);
+      alert(`打开下载链接失败: ${error}`);
+    }
+  }
+}
+
+console.log('[AboutView] 脚本执行完成');
 </script>
 
 <template>
@@ -62,6 +115,9 @@ async function openUrl(url: string) {
       </div>
     </SLCard>
 
+    <!-- 此处缺一段代码 -->
+    <!-- 点击加入开发 -->
+    
     <!-- Contributor Wall -->
     <div class="contributor-section">
       <div class="section-header">
@@ -122,47 +178,145 @@ async function openUrl(url: string) {
             <span class="info-value">GNU GPLv3</span>
           </div>
         </div>
+
+        <!-- 检查更新按钮 -->
+        <div class="update-section">
+          <SLButton
+            variant="secondary"
+            size="sm"
+            @click="handleCheckUpdate"
+            :disabled="isCheckingUpdate"
+            style="width: 100%"
+          >
+            {{ isCheckingUpdate ? "检查中..." : "检查更新" }}
+          </SLButton>
+
+          <!-- 更新信息 -->
+          <div v-if="updateInfo" class="update-info">
+            <div v-if="updateInfo.has_update" class="update-available">
+              <div class="update-message">
+                <div class="update-icon">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="17 1 21 5 17 9"></polyline>
+                    <path d="M3 11V9a4 4 0 0 1 4-4h14"></path>
+                    <polyline points="7 23 3 19 7 15"></polyline>
+                    <path d="M21 13v2a4 4 0 0 1-4 4H3"></path>
+                  </svg>
+                </div>
+                <div>
+                  <div class="update-title">发现新版本 v{{ updateInfo.latest_version }}</div>
+                  <div class="update-desc">当前版本: v{{ updateInfo.current_version }}</div>
+                </div>
+              </div>
+              <div v-if="updateInfo.release_notes" class="release-notes">
+                <div class="notes-title">更新内容:</div>
+                <div class="notes-content">{{ updateInfo.release_notes }}</div>
+              </div>
+              <SLButton
+                v-if="updateInfo.download_url"
+                variant="primary"
+                size="sm"
+                @click="handleDownloadUpdate"
+                style="width: 100%; margin-top: 8px"
+              >
+                下载更新
+              </SLButton>
+            </div>
+            <div v-else class="update-latest">
+              <div class="update-icon">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="20 6 9 17 4 12"></polyline>
+                </svg>
+              </div>
+              <span>已是最新版本</span>
+            </div>
+          </div>
+
+          <!-- 错误信息 -->
+          <div v-if="updateError" class="update-error">
+            <div class="error-icon">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <line x1="12" y1="8" x2="12" y2="12"></line>
+                <line x1="12" y1="16" x2="12.01" y2="16"></line>
+              </svg>
+            </div>
+            <span>{{ updateError }}</span>
+          </div>
+        </div>
       </SLCard>
 
       <SLCard title="参与方式">
         <div class="contribute-ways">
           <div class="way-item">
-            <div class="way-icon">💻</div>
+            <div class="way-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="16 18 22 12 16 6"></polyline>
+                <polyline points="8 6 2 12 8 18"></polyline>
+              </svg>
+            </div>
             <div class="way-info">
               <span class="way-title">写代码</span>
               <span class="way-desc">提交 PR，修 Bug 或加新功能</span>
             </div>
           </div>
           <div class="way-item">
-            <div class="way-icon">🎨</div>
+            <div class="way-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 19l7 2-7-18-7 18 7-2zm0 0v-8"></path>
+              </svg>
+            </div>
             <div class="way-info">
               <span class="way-title">做设计</span>
               <span class="way-desc">设计 UI、图标、主题皮肤</span>
             </div>
           </div>
           <div class="way-item">
-            <div class="way-icon">💡</div>
+            <div class="way-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+                <line x1="12" y1="17" x2="12.01" y2="17"></line>
+              </svg>
+            </div>
             <div class="way-info">
               <span class="way-title">提建议</span>
               <span class="way-desc">在 Issues 里提出你的想法</span>
             </div>
           </div>
           <div class="way-item">
-            <div class="way-icon">📖</div>
+            <div class="way-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+                <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+              </svg>
+            </div>
             <div class="way-info">
               <span class="way-title">写文档</span>
               <span class="way-desc">完善教程和使用说明</span>
             </div>
           </div>
           <div class="way-item">
-            <div class="way-icon">🌍</div>
+            <div class="way-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <line x1="2" y1="12" x2="22" y2="12"></line>
+                <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+              </svg>
+            </div>
             <div class="way-info">
               <span class="way-title">翻译</span>
               <span class="way-desc">帮助翻译成其他语言</span>
             </div>
           </div>
           <div class="way-item">
-            <div class="way-icon">📢</div>
+            <div class="way-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"></path>
+                <polyline points="16 6 12 2 8 6"></polyline>
+                <line x1="12" y1="2" x2="12" y2="15"></line>
+              </svg>
+            </div>
             <div class="way-info">
               <span class="way-title">推广</span>
               <span class="way-desc">分享给更多 MC 服主</span>
@@ -174,10 +328,10 @@ async function openUrl(url: string) {
 
     <!-- Links -->
     <div class="links-section">
-      <SLButton variant="primary" size="lg" @click="openUrl('https://gitee.com/fps_z/SeaLantern')">
+      <SLButton variant="primary" size="lg" @click="openLink('https://gitee.com/fps_z/SeaLantern')">
         Gitee 仓库
       </SLButton>
-      <SLButton variant="secondary" size="lg" @click="openUrl('https://space.bilibili.com/409620362')">
+      <SLButton variant="secondary" size="lg" @click="openLink('https://space.bilibili.com/3706927622130406?spm_id_from=333.1387.0.0')">
         B站主页
       </SLButton>
     </div>
@@ -448,10 +602,22 @@ async function openUrl(url: string) {
 }
 
 .way-icon {
-  font-size: 1.5rem;
   flex-shrink: 0;
-  width: 36px;
-  text-align: center;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--sl-primary-bg);
+  color: var(--sl-primary);
+  border-radius: var(--sl-radius-md);
+  transition: all var(--sl-transition-fast);
+}
+
+.way-item:hover .way-icon {
+  background: var(--sl-primary);
+  color: white;
+  transform: scale(1.05);
 }
 
 .way-info {
@@ -497,6 +663,118 @@ async function openUrl(url: string) {
   color: var(--sl-primary);
   font-style: italic;
   margin-top: var(--sl-space-md);
+}
+
+/* Update Section */
+.update-section {
+  margin-top: var(--sl-space-md);
+  padding-top: var(--sl-space-md);
+  border-top: 1px solid var(--sl-border-light);
+}
+
+.update-info {
+  margin-top: var(--sl-space-sm);
+  padding: var(--sl-space-sm);
+  border-radius: var(--sl-radius-md);
+  font-size: 0.875rem;
+}
+
+.update-available {
+  background: var(--sl-primary-bg);
+  border: 1px solid var(--sl-primary-light);
+  padding: var(--sl-space-sm);
+  border-radius: var(--sl-radius-md);
+}
+
+.update-message {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--sl-space-sm);
+}
+
+.update-icon {
+  flex-shrink: 0;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--sl-primary);
+  color: white;
+  border-radius: var(--sl-radius-sm);
+}
+
+.update-latest .update-icon {
+  background: var(--sl-success);
+}
+
+.update-title {
+  font-weight: 600;
+  color: var(--sl-primary);
+  margin-bottom: 2px;
+}
+
+.update-desc {
+  font-size: 0.75rem;
+  color: var(--sl-text-tertiary);
+}
+
+.release-notes {
+  margin-top: var(--sl-space-sm);
+  padding-top: var(--sl-space-sm);
+  border-top: 1px solid var(--sl-border-light);
+}
+
+.notes-title {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--sl-text-secondary);
+  margin-bottom: 4px;
+}
+
+.notes-content {
+  font-size: 0.8125rem;
+  color: var(--sl-text-secondary);
+  line-height: 1.6;
+  max-height: 120px;
+  overflow-y: auto;
+  white-space: pre-wrap;
+}
+
+.update-latest {
+  display: flex;
+  align-items: center;
+  gap: var(--sl-space-xs);
+  padding: var(--sl-space-sm);
+  background: rgba(34, 197, 94, 0.1);
+  border: 1px solid rgba(34, 197, 94, 0.2);
+  border-radius: var(--sl-radius-md);
+  color: var(--sl-success);
+  font-weight: 500;
+}
+
+.update-error {
+  display: flex;
+  align-items: center;
+  gap: var(--sl-space-xs);
+  padding: var(--sl-space-sm);
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.2);
+  border-radius: var(--sl-radius-md);
+  color: var(--sl-danger);
+  font-size: 0.8125rem;
+}
+
+.error-icon {
+  flex-shrink: 0;
+  width: 22px;
+  height: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--sl-danger);
+  color: white;
+  border-radius: 50%;
 }
 
 @media (max-width: 768px) {

@@ -50,4 +50,21 @@ const router = createRouter({
   routes,
 });
 
+// 添加全局导航守卫用于调试
+router.beforeEach((to, from, next) => {
+  console.log('[Router] 导航开始');
+  console.log('[Router] 从:', from.path, '到:', to.path);
+  console.log('[Router] 路由名称:', to.name);
+  next();
+});
+
+router.afterEach((to, from) => {
+  console.log('[Router] 导航完成');
+  console.log('[Router] 当前路由:', to.path);
+});
+
+router.onError((error) => {
+  console.error('[Router] 路由错误:', error);
+});
+
 export default router;
