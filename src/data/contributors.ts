@@ -84,6 +84,12 @@ export const contributors: Contributor[] = [
     avatar: "https://mc-heads.net/avatar/zhu_hao_tian/64",
     url: "https://github.com/zhu1h1t1",
   },
+  {
+    name: "ieshishinjin",
+    role: "新增了功能，并吃了明太鱼干",
+    avatar: "https://minotar.net/avatar/ieshishinjin/64",
+    url: "https://github.com/ieshishinjin",
+  },
   // ============================================
   // 在这里添加更多贡献者！
   // ============================================
