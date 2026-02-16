@@ -13,7 +13,8 @@ export const useI18nStore = defineStore('i18n', {
     isEnglish: (state) => state.locale === 'en-US',
     isDongbeiChinese: (state) => state.locale === 'zh-NE',
     isJapanese : (state) => state.locale === 'ja-JP',
-    isUpsideDownEnglish : (state) => state.locale === 'en-UD'
+    isUpsideDownEnglish : (state) => state.locale === 'en-UD',
+    isChineseMeow : (state) => state.locale === 'zh-ME'
   },
   actions: {
     setLocale(locale: string) {

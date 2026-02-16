@@ -21,6 +21,7 @@ const currentLanguageText = computed(() => {
   if (locale === 'zh-NE') return i18n.t('header.chinese_dongbei');
   if (locale === 'ja-JP') return i18n.t('header.japanese');
   if (locale === 'en-UD') return i18n.t('header.upsidedown');
+  if (locale === 'zh-ME') return i18n.t('header.chinese_meow');
   return i18n.t('header.english');
 });
 
@@ -79,6 +80,9 @@ function handleClickOutside() {
           </div>
           <div class="language-item" @click.stop="setLanguage('en-UD')">
             {{ i18n.t('header.upsidedown') }}
+          </div>
+          <div class="language-item" @click.stop="setLanguage('zh-ME')">
+            {{ i18n.t('header.chinese_meow') }}
           </div>
         </div>
       </div>
