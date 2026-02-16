@@ -35,6 +35,7 @@ const currentLanguageText = computed(() => {
   if (locale === 'zh-JL') return i18n.t('header.chinese_jl');
   if (locale === 'vi-VN') return i18n.t('header.vietnamese');
   if (locale === 'en-GB') return i18n.t('header.british');
+  if (locale === 'en-AU') return i18n.t('header.aussie');
   return i18n.t('header.english');
 });
 
@@ -76,65 +77,70 @@ function handleClickOutside() {
       <div class="language-selector" @click="toggleLanguageMenu">
         <span class="language-text">{{ currentLanguageText }}</span>
         <div class="language-menu" v-if="showLanguageMenu">
-          <div class="language-item" @click.stop="setLanguage('zh-CN')">
-            {{ i18n.t('header.chinese') }}
-          </div>
-          <div class="language-item" @click.stop="setLanguage('zh-TW')">
-            {{ i18n.t('header.chinese_tw') }}
-          </div>
-          <div class="language-item" @click.stop="setLanguage('en-US')">
-            {{ i18n.t('header.english') }}
-          </div>
-          <div class="language-item" @click.stop="setLanguage('en-GB')">
-            {{ i18n.t('header.british') }}
-          </div>
-          <div class="language-item" @click.stop="setLanguage('es-ES')">
-            {{ i18n.t('header.spanish') }}
-          </div>
-          <div class="language-item" @click.stop="setLanguage('de-DE')">
-            {{ i18n.t('header.deutsch') }}
-          </div>
-          <div class="language-item" @click.stop="setLanguage('vi-VN')">
-            {{ i18n.t('header.vietnamese') }}
-          </div>
-          <div class="language-item" @click.stop="setLanguage('en-PT')">
-            {{ i18n.t('header.pirate') }}
-          </div>
-          <div class="language-item" @click.stop="setLanguage('zh-NE')">
-            {{ i18n.t('header.chinese_dongbei') }}
-          </div>
-          <div class="language-item" @click.stop="setLanguage('zh-TJ')">
-            {{ i18n.t('header.chinese_tj') }}
-          </div>
-          <div class="language-item" @click.stop="setLanguage('zh-CT')">
-            {{ i18n.t('header.cantonese') }}
-          </div>
-          <div class="language-item" @click.stop="setLanguage('zh-CY')">
-            {{ i18n.t('header.chinese_cy') }}
-          </div>
-          <div class="language-item" @click.stop="setLanguage('zh-WU')">
-            {{ i18n.t('header.chinese_wu') }}
-          </div>
-          <div class="language-item" @click.stop="setLanguage('zh-MN')">
-            {{ i18n.t('header.chinese_hokkien') }}
-          </div>
-          <div class="language-item" @click.stop="setLanguage('zh-HN')">
-            {{ i18n.t('header.chinese_hn') }}
-          </div>
-          <div class="language-item" @click.stop="setLanguage('zh-JL')">
-            {{ i18n.t('header.chinese_jl') }}
-          </div>
-          <div class="language-item" @click.stop="setLanguage('ja-JP')">
-            {{ i18n.t('header.japanese') }}
-          </div>
-          <div class="language-item" @click.stop="setLanguage('ru-RU')">
-            {{ i18n.t('header.russian') }}
-          </div>
-          <div class="language-item" @click.stop="setLanguage('en-UD')">
-            {{ i18n.t('header.upsidedown') }}
-          </div>
-          <div class="language-item" @click.stop="setLanguage('zh-ME')">
-            {{ i18n.t('header.chinese_meow') }}
+          <div class="language-grid">
+            <div class="language-item" @click.stop="setLanguage('zh-CN')">
+              {{ i18n.t('header.chinese') }}
+            </div>
+            <div class="language-item" @click.stop="setLanguage('zh-TW')">
+              {{ i18n.t('header.chinese_tw') }}
+            </div>
+            <div class="language-item" @click.stop="setLanguage('en-US')">
+              {{ i18n.t('header.english') }}
+            </div>
+            <div class="language-item" @click.stop="setLanguage('en-GB')">
+              {{ i18n.t('header.british') }}
+            </div>
+            <div class="language-item" @click.stop="setLanguage('en-AU')">
+              {{ i18n.t('header.aussie') }}
+            </div>
+            <div class="language-item" @click.stop="setLanguage('es-ES')">
+              {{ i18n.t('header.spanish') }}
+            </div>
+            <div class="language-item" @click.stop="setLanguage('de-DE')">
+              {{ i18n.t('header.deutsch') }}
+            </div>
+            <div class="language-item" @click.stop="setLanguage('vi-VN')">
+              {{ i18n.t('header.vietnamese') }}
+            </div>
+            <div class="language-item" @click.stop="setLanguage('en-PT')">
+              {{ i18n.t('header.pirate') }}
+            </div>
+            <div class="language-item" @click.stop="setLanguage('zh-NE')">
+              {{ i18n.t('header.chinese_dongbei') }}
+            </div>
+            <div class="language-item" @click.stop="setLanguage('zh-TJ')">
+              {{ i18n.t('header.chinese_tj') }}
+            </div>
+            <div class="language-item" @click.stop="setLanguage('zh-CT')">
+              {{ i18n.t('header.cantonese') }}
+            </div>
+            <div class="language-item" @click.stop="setLanguage('zh-CY')">
+              {{ i18n.t('header.chinese_cy') }}
+            </div>
+            <div class="language-item" @click.stop="setLanguage('zh-WU')">
+              {{ i18n.t('header.chinese_wu') }}
+            </div>
+            <div class="language-item" @click.stop="setLanguage('zh-MN')">
+              {{ i18n.t('header.chinese_hokkien') }}
+            </div>
+            <div class="language-item" @click.stop="setLanguage('zh-HN')">
+              {{ i18n.t('header.chinese_hn') }}
+            </div>
+            <div class="language-item" @click.stop="setLanguage('zh-JL')">
+              {{ i18n.t('header.chinese_jl') }}
+            </div>
+            <div class="language-item" @click.stop="setLanguage('ja-JP')">
+              {{ i18n.t('header.japanese') }}
+            </div>
+            <div class="language-item" @click.stop="setLanguage('ru-RU')">
+              {{ i18n.t('header.russian') }}
+            </div>
+            <div class="language-item" @click.stop="setLanguage('en-UD')">
+              {{ i18n.t('header.upsidedown') }}
+            </div>
+            <div class="language-item" @click.stop="setLanguage('zh-ME')">
+              {{ i18n.t('header.chinese_meow') }}
+            </div>
           </div>
         </div>
       </div>
@@ -335,4 +341,64 @@ function handleClickOutside() {
   z-index: 999;
   pointer-events: auto;
 }
+
+.language-menu {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  margin-top: 8px;
+  background: var(--sl-bg-primary);
+  border: 1px solid var(--sl-border-light);
+  border-radius: var(--sl-radius-lg);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  min-width: 240px;
+  max-width: 300px;
+  z-index: 9999;
+  overflow: hidden;
+  padding: 8px;
+}
+
+.language-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2px;
+  max-height: 320px;
+  overflow-y: auto;
+}
+
+.language-item {
+  padding: 8px 12px;
+  font-size: 0.8125rem;
+  color: var(--sl-text-secondary);
+  cursor: pointer;
+  transition: all var(--sl-transition-fast);
+  border-radius: var(--sl-radius-sm);
+  text-align: left;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.language-item:hover {
+  background: var(--sl-primary-bg);
+  color: var(--sl-primary);
+}
+
+.language-grid::-webkit-scrollbar {
+  width: 4px;
+}
+
+.language-grid::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.language-grid::-webkit-scrollbar-thumb {
+  background: var(--sl-border-light);
+  border-radius: var(--sl-radius-full);
+}
+
+.language-grid::-webkit-scrollbar-thumb:hover {
+  background: var(--sl-text-tertiary);
+}
 </style>
+

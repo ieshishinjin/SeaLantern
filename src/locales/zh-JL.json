@@ -39,7 +39,8 @@
     "chinese_hn": "河南话",
     "chinese_jl": "胶辽官话",
     "vietnamese": "Tiếng Việt",
-    "british": "British English"
+    "british": "British English",
+    "aussie": "Aussie English"
   },
   "home": {
     "title": "服务器管理",
