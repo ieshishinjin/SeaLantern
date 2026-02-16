@@ -7,6 +7,7 @@ import enUD from './en-UD.json';
 import zhME from './zh-ME.json';
 import esES from './es-ES.json';
 import deDE from './de-DE.json';
+import enPT from './en-PT.json';
 
 interface Translation {
   [key: string]: any;
@@ -25,7 +26,8 @@ const translations: Translations = {
   'en-UD': enUD,
   'zh-ME': zhME,
   'es-ES': esES,
-  'de-DE': deDE
+  'de-DE': deDE,
+  'en-PT': enPT
 };
 
 import { ref } from 'vue';

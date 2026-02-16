@@ -27,7 +27,9 @@
     "japanese" : "日本語",
     "upsidedown": "ƎƃuɐuɐW",
     "chinese_meow": "喵语",
-    "spanish": "Español"
+    "spanish": "Español",
+    "deutsch": "Deutsch",
+    "pirate": "Pirate"
   },
   "home": {
     "title": "伺服器管理",
