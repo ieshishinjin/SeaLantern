@@ -10,6 +10,7 @@ import deDE from './de-DE.json';
 import enPT from './en-PT.json';
 import zhTJ from './zh-TJ.json';
 import zhCT from './zh-CT.json';
+import ruRU from './ru-RU.json';
 
 interface Translation {
   [key: string]: any;
@@ -31,7 +32,8 @@ const translations: Translations = {
   'de-DE': deDE,
   'en-PT': enPT,
   'zh-TJ': zhTJ,
-  'zh-CT': zhCT
+  'zh-CT': zhCT,
+  'ru-RU': ruRU
 };
 
 import { ref } from 'vue';
