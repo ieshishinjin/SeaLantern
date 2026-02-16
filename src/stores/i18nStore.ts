@@ -22,7 +22,8 @@ export const useI18nStore = defineStore('i18n', {
     isCantonese : (state) => state.locale === 'zh-CT',
     isRussian : (state) => state.locale === 'ru-RU',
     isChuanyu : (state) => state.locale === 'zh-CY',
-    isWuyu : (state) => state.locale === 'zh-WU'
+    isWuyu : (state) => state.locale === 'zh-WU',
+    isHokkien : (state) => state.locale === 'zh-MN'
   },
   actions: {
     setLocale(locale: string) {

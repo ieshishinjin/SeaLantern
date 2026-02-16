@@ -34,7 +34,8 @@
     "cantonese": "粤语",
     "russian": "Русский",
     "chinese_cy": "川渝话",
-    "chinese_wu": "吴语"
+    "chinese_wu": "吴语",
+    "chinese_hokkien": "闽南语"
   },
   "home": {
     "title": "伺服器管理",

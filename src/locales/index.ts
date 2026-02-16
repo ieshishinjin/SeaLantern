@@ -13,6 +13,7 @@ import zhCT from './zh-CT.json';
 import ruRU from './ru-RU.json';
 import zhCY from './zh-CY.json';
 import zhWU from './zh-WU.json';
+import zhMN from './zh-MN.json';
 
 interface Translation {
   [key: string]: any;
@@ -37,7 +38,8 @@ const translations: Translations = {
   'zh-CT': zhCT,
   'ru-RU': ruRU,
   'zh-CY': zhCY,
-  'zh-WU': zhWU
+  'zh-WU': zhWU,
+  'zh-MN': zhMN
 };
 
 import { ref } from 'vue';
