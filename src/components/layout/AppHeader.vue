@@ -34,6 +34,7 @@ const currentLanguageText = computed(() => {
   if (locale === 'zh-HN') return i18n.t('header.chinese_hn');
   if (locale === 'zh-JL') return i18n.t('header.chinese_jl');
   if (locale === 'vi-VN') return i18n.t('header.vietnamese');
+  if (locale === 'en-GB') return i18n.t('header.british');
   return i18n.t('header.english');
 });
 
@@ -83,6 +84,9 @@ function handleClickOutside() {
           </div>
           <div class="language-item" @click.stop="setLanguage('en-US')">
             {{ i18n.t('header.english') }}
+          </div>
+          <div class="language-item" @click.stop="setLanguage('en-GB')">
+            {{ i18n.t('header.british') }}
           </div>
           <div class="language-item" @click.stop="setLanguage('es-ES')">
             {{ i18n.t('header.spanish') }}

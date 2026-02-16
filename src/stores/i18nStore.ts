@@ -26,7 +26,8 @@ export const useI18nStore = defineStore('i18n', {
     isHokkien : (state) => state.locale === 'zh-MN',
     isHenan : (state) => state.locale === 'zh-HN',
     isJiaoliao : (state) => state.locale === 'zh-JL',
-    isVietnamese : (state) => state.locale === 'vi-VN'
+    isVietnamese : (state) => state.locale === 'vi-VN',
+    isBritish : (state) => state.locale === 'en-GB'
   },
   actions: {
     setLocale(locale: string) {

@@ -4,15 +4,15 @@
     "home": "Home",
     "create_server": "Create Server",
     "console": "Console",
-    "config_edit": "Config Edit",
-    "player_manage": "Player Manage",
+    "config_edit": "Edit Config",
+    "player_manage": "Manage Players",
     "settings": "Settings",
     "about": "About",
     "loading": "Loading..."
   },
   "sidebar": {
     "groups": {
-      "main": "Main",
+      "main": "General",
       "server": "Server",
       "system": "System"
     },
@@ -29,7 +29,7 @@
     "chinese_meow": "喵语",
     "spanish": "Español",
     "deutsch": "Deutsch",
-    "pirate": "Pirate",
+    "Pirate" : "Pirate",
     "chinese_tj": "天津话",
     "cantonese": "粤语",
     "russian": "Русский",
@@ -91,7 +91,7 @@
     "copy_log": "Copy Log"
   },
   "config": {
-    "title": "Config Edit",
+    "title": "Edit Config",
     "save": "Save",
     "reload": "Reload",
     "search": "Search config items...",
@@ -124,7 +124,7 @@
     }
   },
   "players": {
-    "title": "Player Manage",
+    "title": "Manage Players",
     "whitelist": "Whitelist",
     "banned": "Banned",
     "ops": "Ops",
@@ -139,7 +139,7 @@
     "kick": "Kick",
     "empty_whitelist": "Whitelist is empty",
     "empty_banned": "Ban list is empty",
-    "ban": "Banned",
+    "ban": "Ban",
     "unban": "Unban",
     "empty_ops": "OP list is empty",
     "deop": "De-OP",
@@ -163,7 +163,7 @@
     "default_port": "Default Port",
     "jvm_args": "JVM Arguments",
     "general": "General",
-    "general_desc": "Basic behavior settings",
+    "general_desc": "Basic behaviour settings",
     "auto_stop_desc": "Automatically send stop command to running servers when exiting Sea Lantern to prevent data loss",
     "auto_eula_desc": "Automatically write eula=true before starting server, eliminating manual modification",
     "server_defaults": "Server Defaults",
@@ -173,7 +173,7 @@
     "min_memory_desc": "Recommended to set to 1/4 to 1/2 of max memory",
     "default_java": "Default Java Path",
     "default_java_desc": "Leave blank to automatically detect the most suitable Java each time",
-    "jvm_args_desc": "These parameters will be added to all server startups. Suitable for GC optimization parameters",
+    "jvm_args_desc": "These parameters will be added to all server startups. Suitable for GC optimisation parameters",
     "port_desc": "Minecraft default port is 25565. Multiple servers need different ports",
     "jvm_args_placeholder": "-XX:+UseG1GC -XX:+ParallelRefProcEnabled -XX:MaxGCPauseMillis=200 -XX:+UnlockExperimentalVMOptions -XX:+DisableExplicitGC",
     "console": "Console",
@@ -183,7 +183,7 @@
     "max_log_lines": "Max Log Lines",
     "max_log_lines_desc": "Maximum number of log lines to keep per server, older logs are automatically cleared beyond this limit. Default 5000",
     "appearance": "Appearance",
-    "appearance_desc": "Customize software background and visual effects",
+    "appearance_desc": "Customise software background and visual effects",
     "theme": "Theme Mode",
     "theme_desc": "Select the theme appearance of the application, \"Follow System\" will automatically match the system's dark/light mode",
     "font_size": "Text Size",
@@ -234,6 +234,8 @@
     "export_success": "Settings JSON copied to clipboard",
     "import_success": "Settings imported",
     "no_json": "Please paste JSON",
+    "import_title": "Import Settings",
+    "reset_title": "Confirm Restore Defaults",
     "browse_java": "Browse for java.exe",
     "browse_jar": "Browse for .jar file",
     "server_name_placeholder": "Enter name"
@@ -241,7 +243,7 @@
   "about": {
     "title": "About",
     "version": "Version",
-    "check_update": "Check Update",
+    "check_update": "Check for Update",
     "contributors": "Contributors",
     "subtitle": "Minecraft Server Management Tool",
     "tech_badge": "Tauri 2 + Vue 3",

@@ -38,7 +38,8 @@
     "chinese_hokkien": "闽南语",
     "chinese_hn": "河南话",
     "chinese_jl": "胶辽官话",
-    "vietnamese": "Tiếng Việt"
+    "vietnamese": "Tiếng Việt",
+    "british": "British English"
   },
   "home": {
     "title": "服务器管理",

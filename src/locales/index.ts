@@ -17,6 +17,7 @@ import zhMN from './zh-MN.json';
 import zhHN from './zh-HN.json';
 import zhJL from './zh-JL.json';
 import viVN from './vi-VN.json';
+import enGB from './en-GB.json';
 
 interface Translation {
   [key: string]: any;
@@ -45,7 +46,8 @@ const translations: Translations = {
   'zh-MN': zhMN,
   'zh-HN': zhHN,
   'zh-JL': zhJL,
-  'vi-VN': viVN
+  'vi-VN': viVN,
+  'en-GB': enGB
 };
 
 import { ref } from 'vue';
