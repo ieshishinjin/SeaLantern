@@ -23,6 +23,8 @@ import zhTJ from "./zh-TJ.json";
 import zhWU from "./zh-WU.json";
 import jaKS from "./ja-KS.json";
 import jaHK from "./ja-HK.json";
+import koKR from "./ko-KR.json";
+import koNK from "./ko-NK.json";
 
 type TranslationNode = {
   [key: string]: string | TranslationNode;
@@ -30,7 +32,7 @@ type TranslationNode = {
 
 export const SUPPORTED_LOCALES = [
   "zh-CN", "en-US", "zh-TW", "zh-JB","zh-NE","de-DE","en-AU","en-GB","en-PT","en-UN","es-ES","ja-JP","ru-RU","vi-VN",
-  "zh-CT", "zh-CY", "zh-HN", "zh-JL","zh-ME","zh-MN","zh-TJ","zh-WU","ja-KS","ja-HK"
+  "zh-CT", "zh-CY", "zh-HN", "zh-JL","zh-ME","zh-MN","zh-TJ","zh-WU","ja-KS","ja-HK","ko-KR","ko-NK"
 ] as const;
 export type LocaleCode = (typeof SUPPORTED_LOCALES)[number];
 
@@ -58,7 +60,9 @@ const translations: Record<LocaleCode, TranslationNode> = {
   "zh-TJ": zhTJ,
   "zh-WU": zhWU,
   "ja-KS": jaKS,
-  "ja-HK": jaHK
+  "ja-HK": jaHK,
+  "ko-KR": koKR,
+  "ko-NK": koNK
 };
 
 function isSupportedLocale(locale: string): locale is LocaleCode {
