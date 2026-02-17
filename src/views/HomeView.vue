@@ -683,7 +683,7 @@ function handleAnimationEnd(event: AnimationEvent) {
               <span class="stat-value">{{ cpuUsage }}%</span>
             </div>
             <div class="mini-chart taskmgr-style">
-              <svg viewBox="0 0 300 40" class="chart-svg">
+              <svg viewBox="0 0 300 40" class="chart-svg" preserveAspectRatio="none">
                 <!-- 网格线 -->
                 <g class="grid-lines" stroke="var(--sl-border)" stroke-width="0.5">
                   <line x1="0" y1="8" x2="300" y2="8" />
@@ -695,15 +695,19 @@ function handleAnimationEnd(event: AnimationEvent) {
                 <polygon
                   :points="
                     '0,40 ' +
-                    cpuHistory.map((v, i) => i * 10 + ',' + (40 - v * 0.4)).join(' ') +
-                    ',300,40'
+                    cpuHistory.map((v, i) =>
+                      (cpuHistory.length > 1 ? (i / (cpuHistory.length - 1)) * 300 : 0) + ',' + (40 - v * 0.4)
+                    ).join(' ') +
+                    ' 300,40'
                   "
                   fill="var(--sl-primary)"
                   fill-opacity="0.15"
                 />
                 <!-- 曲线 -->
                 <polyline
-                  :points="cpuHistory.map((v, i) => i * 10 + ',' + (40 - v * 0.4)).join(' ')"
+                  :points="cpuHistory.map((v, i) =>
+                    (cpuHistory.length > 1 ? (i / (cpuHistory.length - 1)) * 300 : 0) + ',' + (40 - v * 0.4)
+                  ).join(' ')"
                   fill="none"
                   stroke="var(--sl-primary)"
                   stroke-width="2"
@@ -724,7 +728,7 @@ function handleAnimationEnd(event: AnimationEvent) {
               <span class="stat-value">{{ memUsage }}%</span>
             </div>
             <div class="mini-chart taskmgr-style">
-              <svg viewBox="0 0 300 40" class="chart-svg">
+              <svg viewBox="0 0 300 40" class="chart-svg" preserveAspectRatio="none">
                 <!-- 网格线 -->
                 <g class="grid-lines" stroke="var(--sl-border)" stroke-width="0.5">
                   <line x1="0" y1="8" x2="300" y2="8" />
@@ -736,15 +740,19 @@ function handleAnimationEnd(event: AnimationEvent) {
                 <polygon
                   :points="
                     '0,40 ' +
-                    memHistory.map((v, i) => i * 10 + ',' + (40 - v * 0.4)).join(' ') +
-                    ',300,40'
+                    memHistory.map((v, i) =>
+                      (memHistory.length > 1 ? (i / (memHistory.length - 1)) * 300 : 0) + ',' + (40 - v * 0.4)
+                    ).join(' ') +
+                    ' 300,40'
                   "
                   fill="var(--sl-success)"
                   fill-opacity="0.15"
                 />
                 <!-- 曲线 -->
                 <polyline
-                  :points="memHistory.map((v, i) => i * 10 + ',' + (40 - v * 0.4)).join(' ')"
+                  :points="memHistory.map((v, i) =>
+                    (memHistory.length > 1 ? (i / (memHistory.length - 1)) * 300 : 0) + ',' + (40 - v * 0.4)
+                  ).join(' ')"
                   fill="none"
                   stroke="var(--sl-success)"
                   stroke-width="2"
@@ -858,12 +866,25 @@ function handleAnimationEnd(event: AnimationEvent) {
           />
         </div>
 
-        <div 
-          class="server-card-path text-mono text-caption" 
+        <div
+          class="server-card-path text-mono text-caption"
           :title="server.jar_path"
           @click="systemApi.openFolder(server.path)"
         >
-          {{ formatServerPath(server.jar_path) }}
+          <span class="server-path-text">{{ formatServerPath(server.jar_path) }}</span>
+          <svg
+            class="folder-icon"
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"/>
+          </svg>
         </div>
 
         <div class="server-card-actions">
@@ -1371,9 +1392,10 @@ function handleAnimationEnd(event: AnimationEvent) {
 }
 
 .server-card-path {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sl-space-sm);
   font-size: 0.75rem;
   color: var(--sl-text-secondary);
   background: var(--sl-bg-tertiary);
@@ -1385,20 +1407,21 @@ function handleAnimationEnd(event: AnimationEvent) {
   transition: all 0.2s ease;
   cursor: pointer;
   user-select: none;
-  position: relative;
 }
 
-.server-card-path::after {
-  content: '';
-  width: 16px;
-  height: 16px;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z'/%3E%3C/svg%3E");
-  position: absolute;
-  right: var(--sl-space-md);
-  top: 50%;
-  transform: translateY(-50%);
+.server-path-text {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  min-width: 0;
+}
+
+.folder-icon {
+  flex-shrink: 0;
   opacity: 0.6;
   transition: opacity 0.2s ease;
+  color: var(--sl-text-secondary);
 }
 
 .server-card-path:hover {
@@ -1410,8 +1433,9 @@ function handleAnimationEnd(event: AnimationEvent) {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
-.server-card-path:hover::after {
+.server-card-path:hover .folder-icon {
   opacity: 1;
+  color: var(--sl-text-primary);
 }
 
 .server-card-path:active {
