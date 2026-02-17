@@ -13,7 +13,7 @@ const LOCALE_LABEL_KEYS: Record<LocaleCode, string> = {
   "en-AU": "header.aussie",
   "en-GB": "header.british",
   "en-PT": "header.pirate",
-  "en-UN": "header.universal",
+  "en-UN": "header.upsidedown",
   "es-ES": "header.spanish",
   "ja-JP": "header.japanese",
   "ru-RU": "header.russian",
