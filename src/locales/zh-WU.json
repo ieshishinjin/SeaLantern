@@ -122,7 +122,8 @@
     "kansaiben": "関西弁",
     "hokkaidou": "北海道",
     "korean": "한국어",
-    "north_korean": "조선말"
+    "north_korean": "조선말",
+    "french": "Français"
   },
   "home": {
     "title": "服务器管理",
