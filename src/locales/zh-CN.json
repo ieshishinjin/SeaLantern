@@ -125,7 +125,8 @@
     "hokkaidou": "北海道",
     "korean": "한국어",
     "north_korean": "조선말",
-    "french": "Français"
+    "french": "Français",
+    "french_ca": "Français (Canada)"
   },
   "home": {
     "title": "服务器管理",
