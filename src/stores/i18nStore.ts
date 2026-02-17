@@ -32,7 +32,8 @@ const LOCALE_LABEL_KEYS: Record<LocaleCode, string> = {
   "ko-NK": "header.north_korean",
   "fr-FA": "header.french",
   "fr-CA": "header.french_ca",
-  "es-AR": "header.spanish_ar"
+  "es-AR": "header.spanish_ar",
+  "zh-HX": "header.huoxing"
 };
 
 export const useI18nStore = defineStore("i18n", () => {
